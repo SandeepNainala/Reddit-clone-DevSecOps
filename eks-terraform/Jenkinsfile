@@ -1,10 +1,10 @@
 pipeline{
-    agent workstation
+    agent any
     
-    options {
-        timeout(time: 30, unit: 'MINUTES')
-        disableConcurrentBuilds()
-    }
+    // options {
+    //     timeout(time: 30, unit: 'MINUTES')
+    //     disableConcurrentBuilds()
+    // }
 
     params {
         booleanParam(name: 'APPLY', defaultValue: true, description: 'Apply Terraform changes')
