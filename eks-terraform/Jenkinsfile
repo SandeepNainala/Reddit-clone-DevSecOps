@@ -6,10 +6,10 @@ pipeline{
     //     disableConcurrentBuilds()
     // }
 
-    params {
-        booleanParam(name: 'APPLY', defaultValue: true, description: 'Apply Terraform changes')
-        booleanParam(name: 'DESTROY', defaultValue: false, description: 'Destroy Terraform resources')
-    }
+    // params {
+    //     booleanParam(name: 'APPLY', defaultValue: true, description: 'Apply Terraform changes')
+    //     booleanParam(name: 'DESTROY', defaultValue: false, description: 'Destroy Terraform resources')
+    // }
 
     stages {
         stage('Checkout from GitHub') {
