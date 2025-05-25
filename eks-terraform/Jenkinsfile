@@ -1,5 +1,5 @@
-pipeline{
-    agent workstation
+pipeline {
+    agent any
     
     // options {
     //     timeout(time: 30, unit: 'MINUTES')
@@ -16,6 +16,7 @@ pipeline{
             steps {
                 git branch: 'main' , url: 'https://github.com/SandeepNainala/Reddit-clone-DevSecOps.git'
             }
+        }
         stage('Terraform Init') {
             steps {
                 dir('eks-terraform') {
@@ -46,4 +47,6 @@ pipeline{
                 }
             }
         }
+    }
+}
 }
