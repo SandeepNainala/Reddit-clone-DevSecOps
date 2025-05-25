@@ -1,52 +1,38 @@
-pipeline {
+pipeline{
     agent any
-    
-    // options {
-    //     timeout(time: 30, unit: 'MINUTES')
-    //     disableConcurrentBuilds()
-    // }
-
-    // params {
-    //     booleanParam(name: 'APPLY', defaultValue: true, description: 'Apply Terraform changes')
-    //     booleanParam(name: 'DESTROY', defaultValue: false, description: 'Destroy Terraform resources')
-    // }
-
     stages {
-        stage('Checkout from GitHub') {
-            steps {
-                git branch: 'main' , url: 'https://github.com/SandeepNainala/Reddit-clone-DevSecOps.git'
+        stage('Checkout from Git'){
+            steps{
+                git branch: 'main', url: 'https://github.com/SandeepNainala/Reddit-clone-DevSecOps.git'
             }
         }
-        stage('Terraform Init') {
-            steps {
-                dir('eks-terraform') {
-                    sh 'terraform init'
-                }
-            }
-        stage('Terraform validate') {
-            steps {
-                dir('eks-terraform') {
-                    sh 'terraform validate'
-                }
-            }
+        stage('Terraform init'){
+             steps{
+                 dir('eks_terraform') {
+                      sh 'terraform init'
+                   }
+             }
         }
-        stage('Terraform Plan') {
-            steps {
-                dir('eks-terraform') {
-                    sh 'terraform plan'
-                }
-            }
+        stage('Terraform validate'){
+             steps{
+                 dir('eks_terraform') {
+                      sh 'terraform validate'
+                   }
+             }
         }
-        stage('Terraform Apply/Destroy') {
-            when {
-                expression { return params.APPLY }
-            }
-            steps {
-                dir('eks-terraform') {
-                    sh 'terraform ${action} -auto-approve'
-                }
-            }
+        stage('Terraform plan'){
+             steps{
+                 dir('eks_terraform') {
+                      sh 'terraform plan'
+                   }
+             }
+        }
+        stage('Terraform apply/destroy'){
+             steps{
+                 dir('eks_terraform') {
+                      sh 'terraform ${action} --auto-approve'
+                   }
+             }
         }
     }
-}
 }
