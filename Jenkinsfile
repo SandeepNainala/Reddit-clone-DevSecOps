@@ -36,8 +36,7 @@ pipleline {
             steps {
                 withSonarQubeEnv('sonar-server') {
                     // Ensure the SonarQube server is running and accessible
-                    sh ''' ${SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectName=Reddit \ 
-                        -Dsonar.projectKey=Reddit '''              
+                    sh ''' ${SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectName=Reddit -Dsonar.projectKey=Reddit '''              
                 }
             }
         }
