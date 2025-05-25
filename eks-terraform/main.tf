@@ -22,6 +22,18 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_role_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
 }
 
+#get vpc data
+data "aws_vpc" "default" {
+  default = true
+}
+#get public subnets for cluster
+data "aws_subnets" "public" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+}
+
 #cluster provising 
 
 resource "aws_eks_cluster" "eks_cluster" {
@@ -29,9 +41,12 @@ resource "aws_eks_cluster" "eks_cluster" {
   role_arn = aws_iam_role.eks_cluster_role.arn
 
   vpc_config {
-    subnet_ids = [aws_subnet.subnet01.id, aws_subnet.subnet02.id] # Replace with your subnet IDs
+    subnet_ids = data.aws_subnets.public.ids
   }
 
+  # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
+  # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.
+    # This is a workaround for the issue:
   depends_on = [aws_iam_role_policy_attachment.eks_cluster_role_policy]
   
 }
@@ -72,13 +87,16 @@ resource "aws_eks_node_group" "eks_node_group" {
   node_group_name = "my-eks-node-group"
   node_role_arn   = aws_iam_role.eks_cluster_role1.arn
 
-  subnet_ids = [aws_subnet.subnet01.id, aws_subnet.subnet02.id] # Replace with your subnet IDs
+  subnet_ids = data.aws_subnets.public.ids
 
   scaling_config {
     desired_size = 2
     max_size     = 3
     min_size     = 1
   }
+
+  # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
+  # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
 
   depends_on = [
     aws_iam_role_policy_attachment.example-AmazonEKSWorkerNodePolicy,
