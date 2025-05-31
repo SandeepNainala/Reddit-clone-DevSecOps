@@ -6,8 +6,6 @@ pipeline{
         nodejs 'node16'
     }
     environment {
-        JAVA_HOME = '/usr/lib/jvm/temurin-17-jdk-amd64'  // Use actual path
-        PATH = "${JAVA_HOME}/bin:${env.PATH}"
         SCANNER_HOME=tool 'sonar-scanner'
     }
     options {
@@ -53,7 +51,7 @@ pipeline{
         }
         stage('TRIVY FS SCAN') {
             steps {
-                sh "trivy fs . &gt; trivyfs.txt"
+                sh 'trivy fs . > trivyfs.txt'
             }
         }
         stage("Docker Build &amp; Push"){
