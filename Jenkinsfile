@@ -32,10 +32,7 @@ pipeline{
             steps{
                 withSonarQubeEnv('sonar-server') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Reddit \
-                        -Dsonar.java.binaries=target/classes/ \
-                        -Dsonar.exclusions=src/test/java/****/*.java \
-                        -Dsonar.java.libraries=/var/lib/jenkins/.m2/**/*.jar \
-                        -Dsonar.projectKey=Reddit '''
+                    -Dsonar.projectKey=Reddit '''
                 }
             }
         }
