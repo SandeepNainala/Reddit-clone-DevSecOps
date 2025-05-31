@@ -19,16 +19,17 @@ fi
 echo -e "${G}>>> Updating package index${N}"
 apt update -y
 
-# Install Java (Temurin 17)
+# Install Java (openjdk 17)
 echo -e "${G}>>> Installing Temurin 17 JDK${N}"
 if ! java -version 2>&1 | grep "17" >/dev/null; then
   mkdir -p /etc/apt/keyrings
   wget -qO /etc/apt/keyrings/adoptium.asc https://packages.adoptium.net/artifactory/api/gpg/key/public
   echo "deb [signed-by=/etc/apt/keyrings/adoptium.asc] https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" | tee /etc/apt/sources.list.d/adoptium.list
   apt update -y
-  apt install -y temurin-17-jdk
+  apt install openjdk-17-jdk -y
+  java -version
 else
-  echo -e "${G}Temurin 17 already installed.${N}"
+  echo -e "${G}openjdk 17 already installed.${N}"
 fi
 java -version
 
@@ -41,6 +42,12 @@ if ! systemctl is-active --quiet jenkins; then
   apt-get install -y jenkins
   systemctl enable jenkins
   systemctl start jenkins
+  jenkins_status=$(systemctl is-active jenkins)
+    if [ "$jenkins_status" = "active" ]; then
+        echo -e "${G}Jenkins installed and started successfully.${N}"
+    else
+        echo -e "${R}Failed to start Jenkins. Please check the logs.${N}"
+    fi
 else
   echo -e "${G}Jenkins is already installed and running.${N}"
 fi
