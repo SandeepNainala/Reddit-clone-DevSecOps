@@ -67,7 +67,7 @@ pipeline{
         }
         stage("TRIVY"){
             steps{
-                sh "trivy image sandeepnainala9/reddit:latest &gt; trivy.txt"
+                sh "trivy image sandeepnainala9/reddit:latest > trivy.txt"
             }
         }
         stage('Deploy to container'){
