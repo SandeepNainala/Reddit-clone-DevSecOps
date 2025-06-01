@@ -1,4 +1,4 @@
-FROM node:10-alpine3.15 
+FROM node:19-alpine3.15 
 
 WORKDIR /reddit-clone 
 
