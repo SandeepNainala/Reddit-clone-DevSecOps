@@ -71,7 +71,7 @@ pipeline{
                 sh "trivy image sandeepnainala9/reddit:latest > trivy.txt"
             }
         }
-        stage('Deploy to container'){
+        stage('Deploy to Docker container'){
             steps{
                 sh 'docker run -d --name reddit -p 3000:3000 sandeepnainala9/reddit:latest'
             }
