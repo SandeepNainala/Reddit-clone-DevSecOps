@@ -1,6 +1,6 @@
 pipeline{
-    
-    agent workstation
+
+    agent any
 
     tools{
         jdk 'jdk17'
