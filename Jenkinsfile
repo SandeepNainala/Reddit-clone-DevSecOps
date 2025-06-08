@@ -107,24 +107,24 @@ pipeline {
             }
         }
 
-        // stage('Deploy to Kubernetes') {
-        //     steps {
-        //         script {
-        //             withKubeConfig(
-        //                 credentialsId: 'k8s',
-        //                 caCertificate: '',
-        //                 clusterName: '',
-        //                 contextName: '',
-        //                 namespace: '',
-        //                 restrictKubeConfigAccess: false,
-        //                 serverUrl: ''
-        //             ) {
-        //                 sh 'kubectl apply -f deployment.yml'
-        //                 sh 'kubectl apply -f service.yml'
-        //                 sh 'kubectl apply -f ingress.yml'
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    withKubeConfig(
+                        credentialsId: 'k8s',
+                        caCertificate: '',
+                        clusterName: '',
+                        contextName: '',
+                        namespace: '',
+                        restrictKubeConfigAccess: false,
+                        serverUrl: ''
+                    ) {
+                        sh 'kubectl apply -f deployment.yml'
+                        sh 'kubectl apply -f service.yml'
+                        sh 'kubectl apply -f ingress.yml'
+                    }
+                }
+            }
+        }
     }
 }
