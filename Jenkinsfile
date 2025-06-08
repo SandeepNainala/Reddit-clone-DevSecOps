@@ -9,7 +9,7 @@ pipeline {
 
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
-        NEW_IMAGE_NAME = "sandeepnainala9/reddit:latest"
+        NEW_IMAGE_NAME = "sandeepnainala9/reddit:v1"
         GIT_USER_NAME = "SandeepNainala"
         GIT_REPO_NAME = "Reddit-clone-DevSecOps"
     }
@@ -92,20 +92,20 @@ pipeline {
             }
         }
 
-        stage('Update Deployment File') {
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-                        sh "sed -i 's|image: .*|image: ${NEW_IMAGE_NAME}|' deployment.yml"
-                        sh 'git config user.email "nainala_sandeep@yahoo.com"'
-                        sh 'git config user.name "SandeepNainala" '
-                        sh 'git add deployment.yml'
-                        sh "git commit -m 'Update deployment image to ${NEW_IMAGE_NAME}' || echo 'No changes to commit'"
-                        sh "git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main"
-                    }
-                }
-            }
-        }
+        // stage('Update Deployment File') {
+        //     steps {
+        //         script {
+        //             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+        //                 sh "sed -i 's|image: .*|image: ${NEW_IMAGE_NAME}|' deployment.yml"
+        //                 sh 'git config user.email "nainala_sandeep@yahoo.com"'
+        //                 sh 'git config user.name "SandeepNainala" '
+        //                 sh 'git add deployment.yml'
+        //                 sh "git commit -m 'Update deployment image to ${NEW_IMAGE_NAME}' || echo 'No changes to commit'"
+        //                 sh "git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main"
+        //             }
+        //         }
+        //     }
+        // }
 
         // stage('Deploy to Kubernetes') {
         //     steps {
