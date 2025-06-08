@@ -16,13 +16,6 @@ spec:
     spec:
       containers:
       - name: reddit-clone
-        image: sandeepnainala9/reddit:v2
+        image: sandeepnainala9/reddit:v1
         ports:
         - containerPort: 3000
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "250m"
-          limits:
-            memory: "256Mi"
-            cpu: "500m"
