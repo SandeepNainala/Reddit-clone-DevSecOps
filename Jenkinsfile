@@ -9,7 +9,7 @@ pipeline {
 
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
-        NEW_IMAGE_NAME = "sandeepnainala9/reddit:latest"
+        NEW_IMAGE_NAME = "sandeepnainala9/reddit:v1"
         GIT_USER_NAME = "SandeepNainala"
         GIT_REPO_NAME = "Reddit-clone-DevSecOps"
     }
