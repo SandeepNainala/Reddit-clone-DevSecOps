@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: reddit-clone
-        image: sandeepnainala9/reddit:latest
+        image: sandeepnainala9/reddit:v1
         ports:
         - containerPort: 3000
         resources:
